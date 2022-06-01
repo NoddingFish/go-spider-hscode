@@ -190,7 +190,7 @@ func main() {
 
 			execPage := findList(itemChildren.Id, id, 1)
 			fmt.Println(itemChildren.Name + " 已完成，共执行页数：" + strconv.Itoa(execPage))
-			time.Sleep(time.Second * 3)
+			time.Sleep(time.Second * 30)
 		}
 	}
 }
@@ -238,7 +238,7 @@ func findList(docInt int, id int, page int) int {
 				// 获取详情信息
 				detailUrl, exist := column.Find("a").Attr("href")
 				if exist {
-					columnData[7] = string(findDetail(detailUrl))
+					columnData[7] = strconv.Quote(string(findDetail(detailUrl)))
 				}
 			}
 		})
@@ -246,12 +246,13 @@ func findList(docInt int, id int, page int) int {
 		//	" values('"+columnData[0]+"','"+columnData[1]+"','"+columnData[2]+"','"+columnData[3]+"','"+columnData[4]+"','"+columnData[5]+"')")
 		// 点击进入详情
 		_, _ = io.WriteString(fList, "INSERT INTO "+tableName2+"(`code`,`pid`,`name`,`unit`,`export_tax`,`supervise`,`quarantine`, `detail`)"+
-			" values('"+columnData[0]+"','"+columnData[6]+"','"+columnData[1]+"','"+columnData[2]+"','"+columnData[3]+"','"+columnData[4]+"','"+columnData[5]+"','"+columnData[7]+"');\r\n")
-		time.Sleep(time.Millisecond * 100)
+			" values('"+columnData[0]+"','"+columnData[6]+"','"+columnData[1]+"','"+columnData[2]+"','"+columnData[3]+
+			"','"+columnData[4]+"','"+columnData[5]+"',"+columnData[7]+");\r\n")
+		time.Sleep(time.Millisecond * 1)
 	})
 
 	fmt.Println("写入完成：page " + strconv.Itoa(page))
-	time.Sleep(time.Second * 1)
+	time.Sleep(time.Second * 10)
 	page++
 	return findList(docInt, id, page)
 }

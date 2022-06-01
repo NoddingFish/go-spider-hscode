@@ -15,4 +15,4 @@ go run main.go
 
 
 
-运行过程中会生成两个 `sql` 文件，分别是 `hs_code.sql` 和 `hs_code_list.sql`
+运行过程中会生成两个 `sql` 文件，分别是 `hs_code1.sql` 和 `hs_code_list1.sql`
